@@ -31,7 +31,7 @@ fetchGithubProfile();
 const displayUserInfo = function (data) {
 
     const div = document.createElement("div");
-    div.classList.add(".user-info");
+    div.classList.add("user-info");
     div.innerHTML = `<figure>
                         <img alt="user avatar" src=${data.avatar_url} />
                     </figure>
@@ -145,5 +145,5 @@ const displayRepoDetail = function (repoInfo, languages) {
     repoData.append(div);
     repoData.classList.remove("hide");
     repos.classList.add("hide");
-    
+
 };
