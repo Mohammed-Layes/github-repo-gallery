@@ -13,6 +13,14 @@ const repos = document.querySelector(".repos");
 
 const repoData = document.querySelector(".repo-data");
 
+// At the top of your file, add two new global variables. The first variable should select the Back to Repo Gallery button. 
+// Create a second global variable called filterInput to select the input with the “Search by name” placeholder.
+const viewReposBtn = document.querySelector(".view-repos");
+
+// const filterInput = document.querySelector("input[placeholder='Search by name']");
+const filterInput = document.querySelector(".filter-repos")
+console.log(filterInput);
+
 // Create and name an async function to fetch information from your GitHub profile using the GitHub API address: https://api.github.com. Target the “users” endpoint and use a template literal to add the global username variable to the endpoint: users/${username}. Notice that you’ll add a “$” character in front of the variable name to create a placeholder. Because you’re using a template literal, surround the URL in backticks instead of quotation marks.
 // In your next await statement, resolve the JSON response. Log out the response to the console and call your function to see your results. 
 // In the response, look carefully at the properties. You’ll need some of those properties to complete the next function!
@@ -69,11 +77,15 @@ const fetchRepos = async function () {
 // A class of “repo”.
 // An <h3> element with the repo name. 
 // Append the list item to the global variable that selects the unordered repos list.
+// At the top of the function that displays all your repos, show the filterInput element. 
+// Save and view your site. You should now see an input box (AKA search box) show up on the page after your profile information.
 const displayRepoInfo = function (repos) {
+
+    filterInput.classList.remove("hide");
 
     for (const repo of repos) {
         const listItem = document.createElement("li")
-        listItem.classList.add(".repo");
+        listItem.classList.add("repo");
         listItem.innerHTML = `<h3>${repo.name}</h3>`;
         repoList.append(listItem);
     }
@@ -145,5 +157,58 @@ const displayRepoDetail = function (repoInfo, languages) {
     repoData.append(div);
     repoData.classList.remove("hide");
     repos.classList.add("hide");
+    viewReposBtn.classList.remove("hide");
+
 
 };
+
+// At the bottom of your code, create a click event listener attached to your variable that points to the Back to Repo Gallery button. 
+// In the body of the callback function, unhide (display) the section with the class of “repos”, the location where all the repo information appears. Add the “hide” class to the section where the individual repo data will appear. Also, add the “hide” class to the Back to Repo Gallery button itself. 
+// In the function responsible for displaying the individual repo information, remove the class of “hide” from the Back to Repo Gallery button. Now the user will see the Back to Repo Gallery button when they click on a repo name. When they click on the back button, they’ll return to the complete list of repos. The individual repo information and the back button will then disappear.
+viewReposBtn.addEventListener("click", function () {
+
+    repos.classList.remove("hide");
+    repoData.classList.add("hide");
+    viewReposBtn.classList.add("hide");
+
+});
+
+// At the bottom of your code, attach an "input" event listener to filterInput. Pass the event (e) the callback function
+// Inside the callback function, create a variable to capture the value of the search text. Log out the variable and enter some text in the input to ensure that you’ve successfully captured it.
+// Create a variable called repos to select ALL elements on the page with a class of “repo”.
+// Create a variable and assign it to the lowercase value of the search text. Loop through each repo inside your repos element. Inside the loop, create a variable and assign it to the lowercase value of the innerText. of each repo.
+// Check to see if the lowercase repo text includes the lowercase search text. If the repo contains the text, show it. If it doesn’t contain the text, hide the repo.
+// Test out your input! The repo list should dynamically change when you add or remove letters in the search box (see gif above).
+filterInput.addEventListener("input", function (e) {
+
+    const searchText = e.target.value;
+    const searchTextLoweredCase = searchText.toLowerCase();
+    const repos = document.querySelectorAll(".repo");
+    
+    for (const repo of repos) {
+        const repoNameLowerCased = repo.innerText.toLowerCase();
+        console.log(repoNameLowerCased);
+
+        if (repoNameLowerCased.includes(searchTextLoweredCase)) {
+            repo.classList.remove("hide")
+        } else {
+            repo.classList.add("hide");
+        }
+    }
+
+});
+
+// filterInput.addEventListener("input", function (e) {
+//     const searchText = e.target.value;
+//     const repos = document.querySelectorAll(".repo");
+//     const searchLowerText = searchText.toLowerCase();
+  
+//     for (const repo of repos) {
+//       const repoLowerText = repo.innerText.toLowerCase();
+//       if (repoLowerText.includes(searchLowerText)) {
+//         repo.classList.remove("hide");
+//       } else {
+//         repo.classList.add("hide");
+//       }
+//     }
+// });
