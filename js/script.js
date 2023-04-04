@@ -19,7 +19,6 @@ const viewReposBtn = document.querySelector(".view-repos");
 
 // const filterInput = document.querySelector("input[placeholder='Search by name']");
 const filterInput = document.querySelector(".filter-repos")
-console.log(filterInput);
 
 // Create and name an async function to fetch information from your GitHub profile using the GitHub API address: https://api.github.com. Target the “users” endpoint and use a template literal to add the global username variable to the endpoint: users/${username}. Notice that you’ll add a “$” character in front of the variable name to create a placeholder. Because you’re using a template literal, surround the URL in backticks instead of quotation marks.
 // In your next await statement, resolve the JSON response. Log out the response to the console and call your function to see your results. 
@@ -65,7 +64,7 @@ const fetchRepos = async function () {
 
     const res = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&sort=desc&per_page=100`);
     const data = await res.json();
-    console.log(data)
+    // console.log(data)
 
     displayRepoInfo(data);
 
@@ -118,18 +117,18 @@ const repoDetail = async function (repoName) {
 
     const res = await fetch(`https://api.github.com/repos/${username}/${repoName}`);
     const repoInfo  = await res.json();
-    console.log(repoInfo);
+    // console.log(repoInfo);
 
     const fetchLanguages = await fetch(`https://api.github.com/repos/${username}/${repoName}/languages`);
     const languageData = await fetchLanguages.json();
-    console.log(languageData); 
+    // console.log(languageData); 
 
     const languages = [];
 
     for (let language in languageData) {
         languages.push(language);
     }
-    console.log(languages);
+    // console.log(languages);
 
     displayRepoDetail(repoInfo, languages);
 
@@ -159,7 +158,6 @@ const displayRepoDetail = function (repoInfo, languages) {
     repos.classList.add("hide");
     viewReposBtn.classList.remove("hide");
 
-
 };
 
 // At the bottom of your code, create a click event listener attached to your variable that points to the Back to Repo Gallery button. 
@@ -170,7 +168,8 @@ viewReposBtn.addEventListener("click", function () {
     repos.classList.remove("hide");
     repoData.classList.add("hide");
     viewReposBtn.classList.add("hide");
-
+    filterInput.value = "";
+    
 });
 
 // At the bottom of your code, attach an "input" event listener to filterInput. Pass the event (e) the callback function
